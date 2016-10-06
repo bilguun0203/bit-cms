@@ -16,3 +16,5 @@ $config['db_user'] = "root";
 $config['db_password'] = "";
 $config['db_name'] = "bitcms";
 $config['db_table_prefix'] = "v1_";
+
+$config['url'] = "http://localhost:63342/bit-cms/";
