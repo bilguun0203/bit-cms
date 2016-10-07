@@ -36,7 +36,7 @@ class func_db {
         }
         catch(PDOException $e){
             echo "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
-            return 0;
+            return "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
         }
     }
     /*      ALTER Table
@@ -159,7 +159,7 @@ class func_db {
         }
         catch(PDOException $e){
             echo "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
-            return 0;
+            return "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
         }
     }
     /*      Update row

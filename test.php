@@ -1,0 +1,2 @@
+<?php
+echo $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].$_SERVER['PHP_SELF'];
