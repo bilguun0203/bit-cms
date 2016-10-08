@@ -94,4 +94,18 @@ class MainFunctions {
             return $this->db->insert($this->config['db_table_prefix']."users",$columns);
         }
     }
+
+    public function userLogin($name,$password){
+        if($this->db->select($this->config['db_table_prefix']."users","*","email = '$name' OR username = '$name'","","LIMIT 1") == 1) {
+            $result = $this->db->select($this->config['db_table_prefix'] . "users", "*", "email = '$name' OR username = '$name'", "", "LIMIT 1");
+            if (isset($result['uuid'])) {
+                if (password_verify($password, $result['password'])) {
+                    $_SESSION['uuid'] = $result['uuid'];
+                    return 1;
+                } else return 0;
+            }
+            else return 0;
+        }
+        else return 0;
+    }
 }

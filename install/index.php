@@ -75,6 +75,12 @@ $status = 100/3-$step;
                         <p><strong>Мэдэгдэл 1:</strong> <?php if(isset($_GET['msg1'])) echo $_GET['msg1']; ?></p>
                         <p><strong>Мэдэгдэл 2:</strong> <?php if(isset($_GET['msg2'])) echo $_GET['msg2']; ?></p>
                         <p><strong>Мэдэгдэл 3:</strong> <?php if(isset($_GET['msg3'])) echo $_GET['msg3']; ?></p>
+                        <p><strong>Мэдэгдэл 4:</strong> <?php if(isset($_GET['msg4'])) echo $_GET['msg4']; ?></p>
+                        <p><strong>Мэдэгдэл 5:</strong> <?php if(isset($_GET['msg5'])) echo $_GET['msg5']; ?></p>
+                        <p><strong>Мэдэгдэл 6:</strong> <?php if(isset($_GET['msg6'])) echo $_GET['msg6']; ?></p>
+                        <p><strong>Мэдэгдэл 7:</strong> <?php if(isset($_GET['msg7'])) echo $_GET['msg7']; ?></p>
+                        <p><strong>Мэдэгдэл 8:</strong> <?php if(isset($_GET['msg8'])) echo $_GET['msg8']; ?></p>
+                        <p><strong>Мэдэгдэл 9:</strong> <?php if(isset($_GET['msg9'])) echo $_GET['msg9']; ?></p>
                     </div>
                     <?php
                 }

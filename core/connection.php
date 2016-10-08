@@ -4,6 +4,7 @@
 Database Connection and Function
 
 --------------------------------------------------------*/
+session_start();
 $db_connection = 0;
 include_once __DIR__ . "/../config.php";
 include_once 'func_db.php';

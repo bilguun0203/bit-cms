@@ -102,15 +102,58 @@ if($method=="db") {
             'display_name' => "varchar(150) NOT NULL",
             'avatar' => "varchar(128) NULL",
         );
-        if(
-            $dbc->createTable($prefix."posts", $columns1, "id")==1 &&
-            $dbc->createTable($prefix."pages", $columns2, "id")==1 &&
-            $dbc->createTable($prefix."users", $columns3, "uuid")==1
-        ){
+        $columns4 = array(
+            'id' => "int(8) NOT NULL AUTO_INCREMENT",
+            'name' => "varchar(64) NOT NULL",
+            'value' => "varchar(64) DEFAULT NULL"
+        );
+        $values1 = array(
+            'name' => "frontend_template",
+            'value' => "bw"
+        );
+        $values2 = array(
+            'name' => "post_per_page",
+            'value' => "10"
+        );
+        $values3 = array(
+            'name' => "site_name",
+            'value' => "BitCMS"
+        );
+        $values4 = array(
+            'name' => "site_tagline",
+            'value' => "Bit sized CMS"
+        );
+        $columns5 = array(
+            'id' => "int(8) NOT NULL AUTO_INCREMENT",
+            'order' => "int(4) NOT NULL",
+            'name' => "varchar(64) NOT NULL",
+            'value' => "varchar(255) NOT NULL"
+
+        );
+        if($dbc->checkTable($name,$prefix."posts")==1)
+            $dbc->dropTable($prefix."posts");
+        if($dbc->checkTable($name,$prefix."pages")==1)
+            $dbc->dropTable($prefix."pages");
+        if($dbc->checkTable($name,$prefix."users")==1)
+            $dbc->dropTable($prefix."users");
+        if($dbc->checkTable($name,$prefix."options")==1)
+            $dbc->dropTable($prefix."options");
+        if($dbc->checkTable($name,$prefix."menu")==1)
+            $dbc->dropTable($prefix."menu");
+        $msg[0] = $dbc->createTable($prefix."posts", $columns1, "id");
+        $msg[1] = $dbc->createTable($prefix."pages", $columns2, "id");
+        $msg[2] = $dbc->createTable($prefix."users", $columns3, "uuid");
+        $msg[3] = $dbc->createTable($prefix."options", $columns4, "id");
+        $msg[4] = $dbc->createTable($prefix."menu", $columns5, "id");
+        $msg[5] = $dbc->insert($prefix."options", $values1);
+        $msg[6] = $dbc->insert($prefix."options", $values2);
+        $msg[7] = $dbc->insert($prefix."options", $values3);
+        $msg[8] = $dbc->insert($prefix."options", $values4);
+        if($msg[0] == 1 && $msg[1] == 1 && $msg[2] == 1 && $msg[3] == 1 && $msg[4] == 1 && $msg[5] == 1){
             header("Location: index.php?step=2");
         }
         else {
-            header("Location: index.php?step=1&error=2&msg1=".$dbc->createTable($prefix."posts", $columns1, "id")."&msg2=".$dbc->createTable($prefix."pages", $columns2, "id")."&msg3=".$dbc->createTable($prefix."users", $columns3, "uuid"));
+            header("Location: index.php?step=1&error=2&msg1=".$msg[0]."&msg2=".$msg[1]."&msg3=".$msg[2]."&msg4=".$msg[3]."&msg5=".$msg[4]."&msg6=".$msg[5]."&msg7=".$msg[6]."&msg8=".$msg[7]."&msg9=".$msg[8]);
         }
     }
 }
@@ -127,6 +170,6 @@ elseif ($method=="user"){
             header("Location: index.php?step=2&error=1&msg=".$func->createUser($username,$email,$password,"admin"));
     }
     else {
-        header("Location: index.php?step=2&error=1");
+        header("Location: index.php?step=2&error=1&msg=Оруулсан өгөгдлөө шалгана уу.");
     }
 }

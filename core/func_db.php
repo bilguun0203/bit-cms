@@ -18,14 +18,14 @@ class func_db {
         $cols = count($columns);
         foreach ($columns as $col => $value) {
             if($i < $cols-1){
-                $sql .= $col . " " . $value . ",";
+                $sql .= "`" . $col . "` " . $value . ",";
             }
             else if($i == $cols-1) {
                 if($primary!=""){
-                    $sql .= $col . " " . $value . ",PRIMARY KEY (" . $primary . "))";
+                    $sql .=  "`" . $col . "` " . $value . ",PRIMARY KEY (" . $primary . "))";
                 }
                 else {
-                    $sql .= $col . " " . $value . ") ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+                    $sql .=  "`" . $col . "` " . $value . ") ENGINE=MyISAM DEFAULT CHARSET=utf8;";
                 }
             }
             $i++;
@@ -47,13 +47,13 @@ class func_db {
     public function alterTable($table, $method, $column, $datatype=""){
         $sql = "ALTER TABLE " . $table . " ";
         if(strtolower($method) == "add" && $datatype!=""){
-            $sql .= " ADD " . $column . " " . $datatype;
+            $sql .= " ADD `" . $column . "` " . $datatype;
         }
         else if(strtolower($method) == "modify" && $datatype != ""){
-            $sql .= " MODIFY COLUMN " . $column . " " . $datatype;
+            $sql .= " MODIFY COLUMN `" . $column . "` " . $datatype;
         }
         else if(strtolower($method) == "drop"){
-            $sql .= " DROP COLUMN " . $column;
+            $sql .= " DROP COLUMN `" . $column . "`";
         }
         else return 0;
         try {
@@ -62,35 +62,35 @@ class func_db {
         }
         catch(PDOException $e){
             echo "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
-            return 0;
+            return "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
         }
     }
     /*      Truncate Table
         TRUNCATE TABLE $table
     */
     public function truncateTable($table){
-        $sql = "TRUNCATE TABLE " . $table;
+        $sql = "TRUNCATE TABLE `" . $table . "`";
         try {
             $this->db->exec($sql);
             return 1;
         }
         catch(PDOException $e){
             echo "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
-            return 0;
+            return "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
         }
     }
     /*      Drop Table
         DROP TABLE $table
     */
     public function dropTable($table){
-        $sql = "DROP TABLE " . $table;
+        $sql = "DROP TABLE `" . $table . "`";
         try {
             $this->db->exec($sql);
             return 1;
         }
         catch(PDOException $e){
             echo "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
-            return 0;
+            return "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
         }
     }
 
@@ -98,26 +98,19 @@ class func_db {
     /*      Select row(s)
         SELECT $columns FROM $table WHERE $where ORDER BY $order
     */
-    public function select($table, $columns="*", $where="1", $order=""){
+    public function select($table, $columns="*", $where="1", $order="", $additions=""){
         $sql = "SELECT ";
         if($columns == "*"){
             $sql .= "*";
         }
         else {
-            $cols = count($columns);
-            for($i = 0; $i < $cols; $i++){
-                if($i < $cols-1){
-                    $sql .= $columns[$i] . ", ";
-                }
-                else if($i == $cols-1) {
-                    $sql .= $columns[$i] . " ";
-                }
-            }
+            $sql .= $columns;
         }
-        $sql .= " FROM " . $table . " WHERE " . $where;
+        $sql .= " FROM " . $table . " WHERE " . $where . " ";
         if($order == "ASC" || $order == "DESC"){
-            $sql .= " ORDER BY " . $order;
+            $sql .= "ORDER BY " . $order . " ";
         }
+        $sql .= $additions;
         try {
             $result = $this->db->query($sql);
             if($result->rowCount() > 0){
@@ -130,7 +123,7 @@ class func_db {
         }
         catch(PDOException $e){
             echo "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
-            return 0;
+            return "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
         }
     }
     /*      Insert row
@@ -143,11 +136,11 @@ class func_db {
         $i = 0;
         foreach ($columns as $col => $value) {
             if($i < $cols-1){
-                $column_list .= $col . ", ";
+                $column_list .= "`" . $col . "`, ";
                 $value_list .= "'" . $value . "', ";
             }
             else if($i == $cols-1) {
-                $column_list .= $col . ")";
+                $column_list .= "`" . $col . "`)";
                 $value_list .= "'" . $value . "')";
             }
             $i++;
@@ -172,10 +165,10 @@ class func_db {
         $cols = count($columns);
         foreach ($columns as $col => $value) {
             if($i < $cols-1){
-                $values .= $col . "='" . $value . "',";
+                $values .= "`" . $col . "`='" . $value . "',";
             }
             else if($i == $cols-1) {
-                $values .= $col . "='" . $value . "'";
+                $values .= "`" . $col . "`='" . $value . "'";
             }
             $i++;
         }
@@ -188,14 +181,14 @@ class func_db {
         }
         catch(PDOException $e){
             echo "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
-            return 0;
+            return "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
         }
     }
     /*      Delete row
         DELETE FROM $table WHERE $where
     */
     public function delete($table, $where){
-        $sql = "DELETE FROM " . $table . " WHERE " . $where;
+        $sql = "DELETE FROM `" . $table . "` WHERE " . $where;
         try {
             if($this->db->query($sql) == TRUE){
                 return 1;
@@ -204,7 +197,49 @@ class func_db {
         }
         catch(PDOException $e){
             echo "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
-            return 0;
+            return "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
         }
+    }
+    /*      Check table exists
+        SELECT * FROM information_schema.tables WHERE table_schema = '$dbname' AND table_name = '$table' LIMIT 1
+    */
+    public function checkTable($dbname, $table){
+        $sql = "SELECT * FROM information_schema.tables WHERE table_schema = '$dbname' AND table_name = '$table' LIMIT 1;";
+        try {
+            $result = $this->db->query($sql);
+            if($result->rowCount() == 0){
+                return 0;
+            }
+            else return 1;
+        }
+        catch(PDOException $e){
+            echo "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
+            return "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
+        }
+    }
+
+    public function checkAllTable($dbname,$prefix){
+        $tables = array($prefix."posts",$prefix."pages",$prefix."users",$prefix."options",$prefix."menu");
+        $table_not_found = array();
+        $i=0;
+        foreach ($tables as $table){
+            $sql = "SELECT * FROM information_schema.tables WHERE table_schema = '$dbname' AND table_name = '$table' LIMIT 1;";
+            try {
+                $result = $this->db->query($sql);
+                if($result->rowCount() == 0){
+                    $table_not_found[$i] = $table;
+                    $i++;
+                }
+//                else return 1;
+            }
+            catch(PDOException $e){
+                echo "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
+                return "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
+            }
+        }
+        if($i==0)
+            return 1;
+        else
+            return $table_not_found;
     }
 }
