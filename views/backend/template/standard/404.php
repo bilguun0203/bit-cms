@@ -1,4 +1,24 @@
-<?php include_once 'elements/header.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title><?php echo $data['title']; ?></title>
+    <!-- Bootstrap -->
+    <link href="../views/backend/template/standard/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../views/backend/template/standard/assets/css/customBT.css" rel="stylesheet">
+    <link href="../views/backend/template/standard/assets/css/style.css" rel="stylesheet">
+    <link href="../views/backend/template/standard/assets/css/font-awesome.min.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../views/backend/template/standard/assets/js/core/jquery-1.12.3.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../views/backend/template/standard/assets/js/core/bootstrap.min.js"></script>
+    <script src="../views/backend/template/standard/assets/js/libs/DataTables/jquery.dataTables.min.js"></script>
+    <script src="../views/backend/template/standard/assets/js/core/backend.js"></script>
+</head>
+<body>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -11,4 +31,5 @@
         </div>
     </div>
 </div>
-<?php include_once 'elements/footer.php'; ?>
+</body>
+</html>

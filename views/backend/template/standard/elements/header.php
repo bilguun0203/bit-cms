@@ -44,11 +44,11 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">Link</a></li>
                 <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> Билгүүн<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> <?php echo $data['user']['username']; ?><span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="?p=account"><i class="fa fa-edit text-info" aria-hidden="true"></i> Бүртгэл</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="?p=login"><i class="fa fa-power-off text-danger" aria-hidden="true"></i> Гарах</a></li>
+                        <li><a href="<?php echo $this->config['url']; ?>bit-bend/logout.php"><i class="fa fa-power-off text-danger" aria-hidden="true"></i> Гарах</a></li>
                     </ul>
                 </li>
             </ul>

@@ -17,4 +17,4 @@
     $config['db_name'] = "bitcms";
     $config['db_table_prefix'] = "bit_";
     
-    $config['url'] = "http://bitcms";
+    $config['url'] = "http://bitcms/";

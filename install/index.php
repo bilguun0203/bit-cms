@@ -17,7 +17,6 @@ else {
 if($db_connection==1 && $step==1){
 //    header("Location: index.php?step=2&host=".$config['db_host']."&name=".$config['db_name']."&user=".$config['db_user']."&pwd=".$config['db_password']."&prefix=".$config['db_table_prefix']);
 }
-$status = 100/3-$step;
 ?>
 <!DOCTYPE HTML>
 <html lang="en" style="background-color: #222222;">
