@@ -21,6 +21,7 @@ if($method=="db") {
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $db_connection = 1;
         echo "Database connection OK<br/>";
+        $conn->exec('SET time_zone = "+08:00";');
     } catch (PDOException $e) {
         header("Location: index.php?error=1");
         $db_connection = 0;
@@ -29,25 +30,25 @@ if($method=="db") {
     if ($db_connection == 1) {
         $confile = fopen(__DIR__ . "/../config.php", "w") or die("Unable to open file!");
         $txt = '
-    <?php
-    /*--------------------------------------------------------
-    
-    Bit CMS Configuration File
-    
-    --------------------------------------------------------*/
-    
-    $config = array();
-    
-    ini_set("display_errors", true);
-    
-    // Database configuration
-    $config[\'db_host\'] = "' . $host . '";
-    $config[\'db_user\'] = "' . $user . '";
-    $config[\'db_password\'] = "' . $password . '";
-    $config[\'db_name\'] = "' . $name . '";
-    $config[\'db_table_prefix\'] = "' . $prefix . '";
-    
-    $config[\'url\'] = "http://' . $_SERVER['HTTP_HOST'] . '";';
+<?php
+/*--------------------------------------------------------
+
+Bit CMS Configuration File
+
+--------------------------------------------------------*/
+
+$config = array();
+date_default_timezone_set("Asia/Ulaanbaatar");
+ini_set("display_errors", true);
+
+// Database configuration
+$config[\'db_host\'] = "' . $host . '";
+$config[\'db_user\'] = "' . $user . '";
+$config[\'db_password\'] = "' . $password . '";
+$config[\'db_name\'] = "' . $name . '";
+$config[\'db_table_prefix\'] = "' . $prefix . '";
+
+$config[\'url\'] = "http://' . $_SERVER['HTTP_HOST'] . '/";';
         fwrite($confile, $txt);
         fclose($confile);
 
@@ -130,6 +131,32 @@ if($method=="db") {
             'value' => "varchar(255) NOT NULL"
 
         );
+        $columns6 = array(
+            'id' => "int(8) NOT NULL AUTO_INCREMENT",
+            'name' => "varchar(64) NOT NULL",
+            'email' => "varchar(128) NOT NULL",
+            'comment' => "text NOT NULL",
+            'location' => "int(8) NOT NULL",
+            'parent' => "int(8) DEFAULT 0",
+            'ip' => "varchar(16) NOT NULL",
+            'useragent' => "varchar(256) NOT NULL",
+            'date' => "datetime NOT NULL",
+            'password' => "varchar(64) NOT NULL",
+            'visibility' => "int(4) DEFAULT 2",
+        );
+        $columns7 = array(
+            'id' => "varchar(16) NOT NULL",
+            'name' => "varchar(64) NOT NULL",
+            'ext' => "varchar(32) NOT NULL",
+            'size' => "varchar(32) NOT NULL",
+            'download_count' => "int(8) NOT NULL",
+            'author' => "varchar(32) DEFAULT 0",
+            'created' => "datetime NOT NULL",
+            'modified' => "datetime NOT NULL",
+            'pubdate' => "datetime NOT NULL",
+            'location' => "varchar(255) NOT NULL",
+            'visibility' => "int(4) NOT NULL"
+        );
         if($dbc->checkTable($name,$prefix."posts")==1)
             $dbc->dropTable($prefix."posts");
         if($dbc->checkTable($name,$prefix."pages")==1)
@@ -140,20 +167,26 @@ if($method=="db") {
             $dbc->dropTable($prefix."options");
         if($dbc->checkTable($name,$prefix."menu")==1)
             $dbc->dropTable($prefix."menu");
+        if($dbc->checkTable($name,$prefix."comments")==1)
+            $dbc->dropTable($prefix."comments");
+        if($dbc->checkTable($name,$prefix."files")==1)
+            $dbc->dropTable($prefix."files");
         $msg[0] = $dbc->createTable($prefix."posts", $columns1, "id");
         $msg[1] = $dbc->createTable($prefix."pages", $columns2, "id");
         $msg[2] = $dbc->createTable($prefix."users", $columns3, "uuid");
         $msg[3] = $dbc->createTable($prefix."options", $columns4, "id");
         $msg[4] = $dbc->createTable($prefix."menu", $columns5, "id");
-        $msg[5] = $dbc->insert($prefix."options", $values1);
-        $msg[6] = $dbc->insert($prefix."options", $values2);
-        $msg[7] = $dbc->insert($prefix."options", $values3);
-        $msg[8] = $dbc->insert($prefix."options", $values4);
-        if($msg[0] == 1 && $msg[1] == 1 && $msg[2] == 1 && $msg[3] == 1 && $msg[4] == 1 && $msg[5] == 1){
+        $msg[5] = $dbc->createTable($prefix."comments", $columns6, "id");
+        $msg[6] = $dbc->createTable($prefix."files", $columns7, "id");
+        $msg[7] = $dbc->insert($prefix."options", $values1);
+        $msg[8] = $dbc->insert($prefix."options", $values2);
+        $msg[9] = $dbc->insert($prefix."options", $values3);
+        $msg[10] = $dbc->insert($prefix."options", $values4);
+        if($msg[0] == 1 && $msg[1] == 1 && $msg[2] == 1 && $msg[3] == 1 && $msg[4] == 1 && $msg[5] == 1 && $msg[6] == 1 && $msg[7] == 1 && $msg[8] == 1 && $msg[9] == 1 && $msg[10] == 1){
             header("Location: index.php?step=2");
         }
         else {
-            header("Location: index.php?step=1&error=2&msg1=".$msg[0]."&msg2=".$msg[1]."&msg3=".$msg[2]."&msg4=".$msg[3]."&msg5=".$msg[4]."&msg6=".$msg[5]."&msg7=".$msg[6]."&msg8=".$msg[7]."&msg9=".$msg[8]);
+            header("Location: index.php?step=1&error=2&msg1=".$msg[0]."&msg2=".$msg[1]."&msg3=".$msg[2]."&msg4=".$msg[3]."&msg5=".$msg[4]."&msg6=".$msg[5]."&msg7=".$msg[6]."&msg8=".$msg[7]."&msg9=".$msg[8]."&msg10=".$msg[9]."&msg11=".$msg[10]);
         }
     }
 }

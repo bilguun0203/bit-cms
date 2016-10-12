@@ -49,8 +49,100 @@ class MainFunctions {
     }
 
     // Data functions
+    // TODO: createPost updatePost deletePost createComment updateComment deleteComment shalgah
+    public function createPost($title,$link="",$body,$category="uncategorized",$tags="",$parent=0,$image="media/default.png",$visibility=1,$comment=1,$pubdate){
+        $author = $this->getUserData();
+        $values = array(
+            'title' => $title,
+            'link' => $link,
+            'image' => $image,
+            'body' => $body,
+            'category' => $category,
+            'tags' => $tags,
+            'pubdate' => $pubdate,
+            'author' => $author['uuid'],
+            'parent' => $parent,
+            'visibility' => $visibility,
+            'comments_allowed' => $comment
+        );
+        if($this->db->insert($this->config['db_table_prefix']."posts",$values)){
+            return true;
+        }
+        else return false;
+    }
+    public function updatePost($id,$title,$link="",$body,$category="uncategorized",$tags="",$parent=0,$image="media/default.png",$visibility=1,$comment=1,$pubdate){
+        $values = array(
+            'title' => $title,
+            'link' => $link,
+            'image' => $image,
+            'body' => $body,
+            'category' => $category,
+            'tags' => $tags,
+            'pubdate' => $pubdate,
+            'parent' => $parent,
+            'visibility' => $visibility,
+            'comments_allowed' => $comment
+        );
+        if($this->db->update($this->config['db_table_prefix']."posts",$values,"id = '".$id."'")){
+            return true;
+        }
+        else return false;
+    }
+    public function deletePost($id){
+        $comments = $this->db->select($this->config['db_table_prefix']."comments","*","location = '".$id."'");
+        if($comments!=0) {
+            foreach ($comments as $comment) {
+                $this->deleteComment($comment['id']);
+            }
+        }
+        if ($this->db->delete($this->config['db_table_prefix'] . "posts", "id = '" . $id . "'") == 1) {
+            return true;
+        } else return false;
+    }
 
-    public function createPost($title){}
+    public function createComment($name,$email,$comment,$location,$parent,$ip,$useragent,$password,$visibility=2){
+        $date = date("Y-m-d H:i:s");
+        $values = array(
+            'name' => $name,
+            'email' => $email,
+            'comment' => $comment,
+            'location' => $location,
+            'parent' => $parent,
+            'ip' => $ip,
+            'useragent' => $useragent,
+            'date' => $date,
+            'password' => $password,
+            'visibility' => $visibility
+        );
+        if($this->db->insert($this->config['db_table_prefix']."comments",$values)){
+            return true;
+        }
+        else return false;
+    }
+    public function updateComment($id,$name,$email,$comment,$password,$visibility){
+        $values = array(
+            'name' => $name,
+            'email' => $email,
+            'comment' => $comment,
+            'password' => $password,
+            'visibility' => $visibility
+        );
+        if($this->db->update($this->config['db_table_prefix']."comments",$values,"id = '".$id."'")){
+            return true;
+        }
+        else return false;
+    }
+    public function deleteComment($id){
+        $comments = $this->db->select($this->config['db_table_prefix']."comments","*","parent = '".$id."'");
+        if($comments!=0) {
+            foreach ($comments as $comment) {
+                $this->deleteComment($comment['id']);
+            }
+        }
+        if ($this->db->delete($this->config['db_table_prefix'] . "posts", "id = '" . $id . "'") == 1) {
+            return true;
+        } else return false;
+    }
 
     public function createUser($username, $email, $password, $role="subscriber", $status=1, $fname=NULL, $lname=NULL, $display_name=NULL, $avatar=NULL){
         $password = password_hash($password, PASSWORD_DEFAULT);

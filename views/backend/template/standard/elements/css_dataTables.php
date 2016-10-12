@@ -1,0 +1,3 @@
+<link href="<?php echo $this->config['file_path_bend']; ?>standard/assets/css/libs/DataTables/jquery.dataTables.css" rel="stylesheet">
+<link href="<?php echo $this->config['file_path_bend']; ?>standard/assets/css/libs/DataTables/extensions/dataTables.colVis.css" rel="stylesheet">
+<link href="<?php echo $this->config['file_path_bend']; ?>standard/assets/css/libs/DataTables/extensions/dataTables.tableTools.css" rel="stylesheet">

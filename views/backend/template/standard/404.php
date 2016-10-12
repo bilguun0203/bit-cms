@@ -11,12 +11,6 @@
     <link href="../views/backend/template/standard/assets/css/customBT.css" rel="stylesheet">
     <link href="../views/backend/template/standard/assets/css/style.css" rel="stylesheet">
     <link href="../views/backend/template/standard/assets/css/font-awesome.min.css" rel="stylesheet">
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="../views/backend/template/standard/assets/js/core/jquery-1.12.3.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../views/backend/template/standard/assets/js/core/bootstrap.min.js"></script>
-    <script src="../views/backend/template/standard/assets/js/libs/DataTables/jquery.dataTables.min.js"></script>
-    <script src="../views/backend/template/standard/assets/js/core/backend.js"></script>
 </head>
 <body>
 <div class="container-fluid">
@@ -31,5 +25,7 @@
         </div>
     </div>
 </div>
+<script src="../views/backend/template/standard/assets/js/core/jquery-1.12.3.min.js"></script>
+<script src="../views/backend/template/standard/assets/js/core/bootstrap.min.js"></script>
 </body>
 </html>

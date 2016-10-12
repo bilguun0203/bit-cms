@@ -1,4 +1,7 @@
 <?php include_once 'elements/header.php'; ?>
+<?php include_once 'elements/css.php'; ?>
+<?php include_once 'elements/css_dataTables.php'; ?>
+<?php include_once 'elements/header_end.php'; ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -6,7 +9,7 @@
             <h1>Нийтлэлүүд</h1>
             <hr>
             <div class="btn-group" role="group" aria-label="Үйлдлүүд">
-                <a href="edit_article.html" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Нэмэх</a>
+                <a href="<?php echo $this->config['url']."bit-bend/?p=edit_post&method=add"; ?>" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Нэмэх</a>
                 <button type="button" class="btn btn-danger"><i class="fa fa-remove" aria-hidden="true"></i> Устгах</button>
                 <div class="btn-group">
                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-toggle-on"></i> Харагдалт өөрчлөх <i class="fa fa-angle-down"></i>
@@ -133,4 +136,6 @@
         </div>
     </div>
 </div>
+<?php include_once 'elements/js.php'; ?>
+<?php include_once 'elements/js_end.php'; ?>
 <?php include_once 'elements/footer.php'; ?>

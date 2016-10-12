@@ -1,4 +1,6 @@
 <?php include_once 'elements/header.php'; ?>
+<?php include_once 'elements/css.php'; ?>
+<?php include_once 'elements/header_end.php'; ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -20,7 +22,9 @@
         </div>
     </div>
 </div>
+<?php include_once 'elements/js.php'; ?>
 <script src="../views/backend/template/standard/assets/js/libs/nestedSortable/jquery.mjs.nestedSortable.js"></script>
+<?php include_once 'elements/js_end.php'; ?>
 <script>
     $(document).ready(function(){
         $('.sortable').nestedSortable({

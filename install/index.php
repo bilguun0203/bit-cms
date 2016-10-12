@@ -80,6 +80,8 @@ if($db_connection==1 && $step==1){
                         <p><strong>Мэдэгдэл 7:</strong> <?php if(isset($_GET['msg7'])) echo $_GET['msg7']; ?></p>
                         <p><strong>Мэдэгдэл 8:</strong> <?php if(isset($_GET['msg8'])) echo $_GET['msg8']; ?></p>
                         <p><strong>Мэдэгдэл 9:</strong> <?php if(isset($_GET['msg9'])) echo $_GET['msg9']; ?></p>
+                        <p><strong>Мэдэгдэл 10:</strong> <?php if(isset($_GET['msg10'])) echo $_GET['msg10']; ?></p>
+                        <p><strong>Мэдэгдэл 11:</strong> <?php if(isset($_GET['msg11'])) echo $_GET['msg11']; ?></p>
                     </div>
                     <?php
                 }
@@ -150,7 +152,7 @@ if($db_connection==1 && $step==1){
                     <h3>Суурилуулалт дууслаа</h3>
                     <p>Bit АУС амжилттай суурилууллаа. Одоо та цахим хуудасны эхлэл хэсэгт очих эсвэл удирдах хэсэгт очиж болно.</p>
                     <p class="text-muted">Хэрвээ та доор байгаа товчны аль нэгэн дээр дарахад аюулгүй байдлын үүднээс энэ хавтас буюу <code>/install/</code> хавтсыг устах болно.</p>
-                    <a href="../index.php" class="btn btn-success">Цахим хуудсандаа зочлох</a> <a href="../bit-bend" class="btn btn-primary">Удирдах хэсэгт нэвтрэх</a>
+                    <a href="<?php echo $config['url']; ?>" class="btn btn-success">Цахим хуудсандаа зочлох</a> <a href="<?php echo $config['url']."bit-bend"; ?>" class="btn btn-primary">Удирдах хэсэгт нэвтрэх</a>
                     <?php
                 }
                 ?>

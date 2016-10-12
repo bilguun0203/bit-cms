@@ -1,2 +1,4 @@
-.idea/*
 test.php
+.idea/
+modules/
+views/backend/template/standard/assets/images/

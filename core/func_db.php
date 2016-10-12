@@ -107,7 +107,7 @@ class func_db {
             $sql .= $columns;
         }
         $sql .= " FROM " . $table . " WHERE " . $where . " ";
-        if($order == "ASC" || $order == "DESC"){
+        if($order!="") {
             $sql .= "ORDER BY " . $order . " ";
         }
         $sql .= $additions;

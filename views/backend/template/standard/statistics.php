@@ -1,4 +1,9 @@
 <?php include_once 'elements/header.php'; ?>
+<?php include_once 'elements/css.php'; ?>
+<?php include_once 'elements/css_dataTables.php'; ?>
+<link href="../views/backend/template/standard/assets/css/libs/morris/morris.core.css" rel="stylesheet">
+<link href="../views/backend/template/standard/assets/css/libs/datepicker.css" rel="stylesheet">
+<?php include_once 'elements/header_end.php'; ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -107,9 +112,11 @@
         </div>
     </div>
 </div>
+<?php include_once 'elements/js.php'; ?>
 <script src="../views/backend/template/standard/assets/js/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 <script src="../views/backend/template/standard/assets/js/libs/raphael/raphael-min.js"></script>
 <script src="../views/backend/template/standard/assets/js/libs/morris.js/morris.min.js"></script>
+<?php include_once 'elements/js_end.php'; ?>
 <script>
     var date = new Date();
     var month = date.getMonth();
