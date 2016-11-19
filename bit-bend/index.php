@@ -10,6 +10,40 @@ if($db_connection == 1 && $dbc->checkAllTable($config['db_name'],$config['db_tab
                 $data['user'] = $func->getUserData();
                 $data['title'] = "BitCMS Backend - " . $page;
                 $data['page'] = $page;
+
+                // PAGE: POSTS
+                if($page == "posts"){
+                    $result = $dbc->select($config['db_table_prefix']."posts","*");
+                    if($result!=0){
+                        if(is_array($result[0]))
+                            $data['posts'] = $result;
+                        else $data['posts'][0] = $result;
+                    }
+                    else {
+                        $data['posts'] = 0;
+                    }
+                }
+
+                // PAGE: EDIT
+                if($page == "edit_post"){
+                    if(isset($_GET['method'])){ // TODO : EDIT hiih bolomjtoi esehiig shalgah
+                        if($_GET['method'] == "edit" && isset($_GET['id'])){
+                            $result = $dbc->select($config['db_table_prefix']."posts","*","id = " . $_GET['id'],"","LIMIT 1");
+                            if($result!=0){
+                                $data['method'] = "edit";
+                                $data['post'] = $result;
+                            }
+                            else {
+                                $data['method'] = "add";
+                            }
+                        }
+                        else $data['method'] = "add";
+                    }
+                    else {
+                        $data['method'] = "add";
+                    }
+                }
+
                 $func->loadView("backend/template/standard/" . $page, $data);
             }
             elseif ($page!="login") {

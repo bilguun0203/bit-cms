@@ -174,7 +174,7 @@ class func_db {
         }
         $sql .= $values . " WHERE " . $where;
         try {
-            if($this->db->query($sql) === TRUE){
+            if($this->db->query($sql) == TRUE){
                 return 1;
             }
             else return 0;

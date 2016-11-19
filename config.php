@@ -13,10 +13,10 @@ ini_set("display_errors", true);
 // Database configuration
 $config['db_host'] = "localhost";
 $config['db_user'] = "root";
-$config['db_password'] = "";
+$config['db_password'] = "toor";
 $config['db_name'] = "bitcms";
 $config['db_table_prefix'] = "bit_";
 
-$config['url'] = "http://bitcms/";
+$config['url'] = "http://bit.cms/";
 $config['file_path_fend'] = "../views/frontend/template/";
 $config['file_path_bend'] = "../views/backend/template/";

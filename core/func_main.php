@@ -4,7 +4,7 @@
 class MainFunctions {
 
     private $db;
-    private $config = array();
+    public $config = array();
 
     public function __construct($config="",$dbc="")
     {
@@ -52,6 +52,8 @@ class MainFunctions {
     // TODO: createPost updatePost deletePost createComment updateComment deleteComment shalgah
     public function createPost($title,$link="",$body,$category="uncategorized",$tags="",$parent=0,$image="media/default.png",$visibility=1,$comment=1,$pubdate){
         $author = $this->getUserData();
+        $dateC = date("Y-m-d H:i:s");
+        $dateM = date("Y-m-d H:i:s");
         $values = array(
             'title' => $title,
             'link' => $link,
@@ -63,7 +65,9 @@ class MainFunctions {
             'author' => $author['uuid'],
             'parent' => $parent,
             'visibility' => $visibility,
-            'comments_allowed' => $comment
+            'comments_allowed' => $comment,
+            'created' => $dateC,
+            'modified' => $dateM
         );
         if($this->db->insert($this->config['db_table_prefix']."posts",$values)){
             return true;
@@ -71,6 +75,7 @@ class MainFunctions {
         else return false;
     }
     public function updatePost($id,$title,$link="",$body,$category="uncategorized",$tags="",$parent=0,$image="media/default.png",$visibility=1,$comment=1,$pubdate){
+        $date = date("Y-m-d H:i:s");
         $values = array(
             'title' => $title,
             'link' => $link,
@@ -81,23 +86,45 @@ class MainFunctions {
             'pubdate' => $pubdate,
             'parent' => $parent,
             'visibility' => $visibility,
-            'comments_allowed' => $comment
+            'comments_allowed' => $comment,
+            'modified' => $date
         );
         if($this->db->update($this->config['db_table_prefix']."posts",$values,"id = '".$id."'")){
             return true;
         }
         else return false;
     }
-    public function deletePost($id){
-        $comments = $this->db->select($this->config['db_table_prefix']."comments","*","location = '".$id."'");
-        if($comments!=0) {
-            foreach ($comments as $comment) {
-                $this->deleteComment($comment['id']);
-            }
-        }
-        if ($this->db->delete($this->config['db_table_prefix'] . "posts", "id = '" . $id . "'") == 1) {
+    public function togglePostVisibility($id, $_value){
+        $value = array(
+            'visibility' => $_value
+        );
+        if($this->db->update($this->config['db_table_prefix']."posts",$value,"id = '".$id."'")){
             return true;
-        } else return false;
+        }
+        else return false;
+    }
+    public function togglePostComment($id, $_value){
+        $value = array(
+            'comments_allowed' => $_value
+        );
+        if($this->db->update($this->config['db_table_prefix']."posts",$value,"id = '".$id."'")){
+            return true;
+        }
+        else return false;
+    }
+    public function deletePost($id){
+        if($this->db->select($this->config['db_table_prefix']."posts","*","id = '".$id."'") != 0) {
+            $comments = $this->db->select($this->config['db_table_prefix'] . "comments", "*", "location = '" . $id . "'");
+            if ($comments != 0) {
+                foreach ($comments as $comment) {
+                    $this->deleteComment($comment['id']);
+                }
+            }
+            if ($this->db->delete($this->config['db_table_prefix'] . "posts", "id = '" . $id . "'") == 1) {
+                return true;
+            } else return false;
+        }
+        else return false;
     }
 
     public function createComment($name,$email,$comment,$location,$parent,$ip,$useragent,$password,$visibility=2){
@@ -221,8 +248,15 @@ class MainFunctions {
         }
         else return 0;
     }
-    public function getUserData(){
-        if($this->is_loggedin()){
+    public function getUserData($id = ""){
+        if($id != ""){
+            $result = $this->db->select($this->config['db_table_prefix']."users","*","uuid = '".$id."'","","LIMIT 1");
+            if($result != 0){
+                return $result;
+            }
+            else return false;
+        }
+        else if($this->is_loggedin()){
             $result = $this->db->select($this->config['db_table_prefix']."users","*","uuid = '".$_SESSION['uuid']."'","","LIMIT 1");
             if($result != 0){
                 return $result;
@@ -230,5 +264,11 @@ class MainFunctions {
             else return false;
         }
         else return false;
+    }
+
+//    public function uploadFile($)
+
+    public function tableItem($string, $attributes){
+        return "<td $attributes>".$string."</td>";
     }
 }
