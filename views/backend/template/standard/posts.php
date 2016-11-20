@@ -84,7 +84,7 @@
                         </th>
                         <th scope="row"><?php echo $post['id']; ?></th>
                         <td><?php echo $post['title']; ?><p><small class="text-muted"><?php echo $post['link']; ?></small></p></td>
-                        <td><?php $author = $this->getUserData($post['author']); echo $author['username']; ?></td>
+                        <td><?php if($this->getUserData($post['author'])) {$author = $this->getUserData($post['author']); echo $author['username'];} else echo $post['author']; ?></td>
                         <td><?php echo $post['category']; ?></td>
                         <td><div class="label label-<?php if($post['comments_allowed']==1)echo 'success'; else echo 'danger'; ?>"><?php echo $post['comments_count']; ?></div></td>
                         <td><small><?php echo $post['created']; ?></small></td>

@@ -8,8 +8,11 @@ if(isset($_GET['name']) && isset($_GET['password'])){
     if(isset($_GET['remember'])){
         $remember = 1;
     }
-    if($func->userLogin($name,$password,$remember)){
+    if($func->userLogin($name,$password,$remember)==1){
         $func->redirect($config['url']."?p=index");
+    }
+    else if($func->userLogin($name,$password,$remember)==2){
+        $func->redirect($config['url']."bit-bend/?p=login&error=2");
     }
     else {
         $func->redirect($config['url']."bit-bend/?p=login&error=1");

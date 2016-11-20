@@ -5,7 +5,11 @@ if($this->is_loggedin()){
 
 $error = "";
 if(isset($_GET['error'])){
-    $error = "Таны оруулсан өгөгдөл буруу байна.";
+    $error = $_GET['error'];
+    if($error==1)
+        $error = "Таны оруулсан өгөгдөл буруу байна.";
+    else if ($error==2)
+        $error = "Таны бүртгэл идэвхгүй байна.";
 }
 $cookie = "";
 if(isset($_COOKIE["bit_username"])){
@@ -36,7 +40,7 @@ if(isset($_COOKIE["bit_username"])){
                 <h4 class="modal-title">Нэвтрэх</h4>
             </div>
             <div class="modal-body">
-                <?php if($error != ""){ ?>
+                <?php if($error == 1){ ?>
                 <div class="alert alert-danger">
                 	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 	<strong>Анхаар!</strong> <?php echo $error; ?>

@@ -84,7 +84,7 @@
                         </th>
                         <th scope="row"><?php echo $page['id']; ?></th>
                         <td><?php echo $page['title']; ?><p><small class="text-muted"><?php echo $page['link']; ?></small></p></td>
-                        <td><?php $author = $this->getUserData($page['author']); echo $author['username']; ?></td>
+                        <td><?php if($this->getUserData($page['author'])) {$author = $this->getUserData($page['author']); echo $author['username'];} else echo $page['author']; ?></td>
                         <td><?php echo $page['type']; ?></td>
                         <td><small><?php echo $page['created']; ?></small></td>
                         <td><small><?php echo $page['modified']; ?></small></td>
