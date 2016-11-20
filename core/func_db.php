@@ -126,6 +126,17 @@ class func_db {
             return "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
         }
     }
+    public function getRowCount($table, $where="1"){
+        $sql = "SELECT * FROM ".$table." WHERE ".$where;
+        try {
+            $result = $this->db->query($sql);
+            return $result->rowCount();
+        }
+        catch(PDOException $e){
+            echo "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
+            return "ERROR >> SQL: " . $sql . "; Message:" . $e->getMessage();
+        }
+    }
     /*      Insert row
         INSERT INTO $table $column_list VALUES $value_list
     */

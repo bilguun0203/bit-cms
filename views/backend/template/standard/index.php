@@ -14,7 +14,7 @@
                                 <i class="fa fa-edit" aria-hidden="true"></i>
                             </div>
                             <div class="col-sm-9">
-                                <p class="box-right">Нийтлэл - 4</p>
+                                <p class="box-right">Нийтлэл - <?php echo $data['rowc']['posts']; ?></p>
                                 <p><a href="?p=edit_post"><i class="fa fa-plus" aria-hidden="true"></i> Нийтлэл бичих</a></p>
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                                 <i class="fa fa-list" aria-hidden="true"></i>
                             </div>
                             <div class="col-sm-9">
-                                <p class="box-right">Хуудас - 3</p>
+                                <p class="box-right">Хуудас - <?php echo $data['rowc']['pages']; ?></p>
                                 <p><a href="?p=edit_page"><i class="fa fa-plus" aria-hidden="true"></i> Хуудас нэмэх</a></p>
                             </div>
                         </div>
@@ -48,8 +48,8 @@
                                 <i class="fa fa-comments-o" aria-hidden="true"></i>
                             </div>
                             <div class="col-sm-9">
-                                <p class="box-right">Сэтгэгдэл - 7</p>
-                                <p>Энэ 7 хоногт 4</p>
+                                <p class="box-right">Сэтгэгдэл - <?php echo $data['rowc']['comments']; ?></p>
+                                <p>Сүүлийн 7 хоногт <?php echo $data['rowc']['comments_week']; ?></p>
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                                 <i class="fa fa-users" aria-hidden="true"></i>
                             </div>
                             <div class="col-sm-9">
-                                <p class="box-right">Хэрэглэгч - 3</p>
+                                <p class="box-right">Хэрэглэгч - <?php echo $data['rowc']['users']; ?></p>
                                 <p><a href="?p=edit_user"><i class="fa fa-user-plus" aria-hidden="true"></i> Хэрэглэгч нэмэх</a></p>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                                 <i class="fa fa-files-o" aria-hidden="true"></i>
                             </div>
                             <div class="col-sm-9">
-                                <p class="box-right">Файлууд - 10</p>
+                                <p class="box-right">Файлууд - <?php echo $data['rowc']['files']; ?></p>
                                 <p><a href="?p=edit_file"><i class="fa fa-plus" aria-hidden="true"></i> Файл нэмэх</a></p>
                             </div>
                         </div>

@@ -510,6 +510,10 @@ class MainFunctions {
         else return false;
     }
 
+    public function getRowCount($table,$where="1"){
+        return $this->db->getRowCount($table,$where);
+    }
+
 //    public function uploadFile($)
 
     public function tableItem($string, $attributes){

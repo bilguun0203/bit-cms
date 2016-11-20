@@ -6,6 +6,12 @@ if($db_connection == 1 && $dbc->checkAllTable($config['db_name'],$config['db_tab
     if($func->is_loggedin()) {
         $data['user'] = $func->getUserData();
         if($data['user']['role']=="admin") {
+            $data['rowc']['posts'] = $func->getRowCount($config['db_table_prefix']."posts");
+            $data['rowc']['pages'] = $func->getRowCount($config['db_table_prefix']."pages");
+            $data['rowc']['comments'] = $func->getRowCount($config['db_table_prefix']."comments");
+            $data['rowc']['comments_week'] = $func->getRowCount($config['db_table_prefix']."comments","DATEDIFF(NOW(),date) < 7");
+            $data['rowc']['users'] = $func->getRowCount($config['db_table_prefix']."users");
+            $data['rowc']['files'] = $func->getRowCount($config['db_table_prefix']."files");
             if (isset($_GET['p'])) {
                 $page = $_GET['p'];
                 if ($func->checkView("backend/template/standard/" . $page)) {
