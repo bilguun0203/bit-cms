@@ -57,7 +57,7 @@ $config[\'file_path_bend\'] = "../views/backend/template/";
 
         include_once __DIR__ . "/../core/connection.php";
 
-        $columns1 = array(
+        $posts = array(
             'id' => "int(6) NOT NULL AUTO_INCREMENT",
             'title' => "varchar(128) NOT NULL",
             'link' => "varchar(128) NOT NULL",
@@ -75,7 +75,7 @@ $config[\'file_path_bend\'] = "../views/backend/template/";
             'comments_count' => "int(6) NOT NULL DEFAULT '0'"
         );
 
-        $columns2 = array(
+        $pages = array(
             'id' => "int(6) NOT NULL AUTO_INCREMENT",
             'title' => "varchar(128) NOT NULL",
             'link' => "varchar(128) NOT NULL",
@@ -94,7 +94,7 @@ $config[\'file_path_bend\'] = "../views/backend/template/";
             'comments_count' => "int(6) NOT NULL DEFAULT '0'"
         );
 
-        $columns3 = array(
+        $users = array(
             'uuid' => "varchar(32) NOT NULL",
             'first_name' => "varchar(64) DEFAULT NULL",
             'last_name' => "varchar(64) DEFAULT NULL",
@@ -104,9 +104,10 @@ $config[\'file_path_bend\'] = "../views/backend/template/";
             'role' => "varchar(32) DEFAULT 'subscriber'",
             'status' => "int(2) DEFAULT '1'",
             'display_name' => "varchar(150) NOT NULL",
-            'avatar' => "varchar(128) NULL",
+            'avatar' => "varchar(128) DEFAULT NULL",
+            'about' => "TEXT DEFAULT NULL",
         );
-        $columns4 = array(
+        $options = array(
             'id' => "int(8) NOT NULL AUTO_INCREMENT",
             'name' => "varchar(64) NOT NULL",
             'value' => "varchar(64) DEFAULT NULL"
@@ -127,14 +128,14 @@ $config[\'file_path_bend\'] = "../views/backend/template/";
             'name' => "site_tagline",
             'value' => "Bit sized CMS"
         );
-        $columns5 = array(
+        $menu = array(
             'id' => "int(8) NOT NULL AUTO_INCREMENT",
             'order' => "int(4) NOT NULL",
             'name' => "varchar(64) NOT NULL",
             'value' => "varchar(255) NOT NULL"
 
         );
-        $columns6 = array(
+        $comments = array(
             'id' => "int(8) NOT NULL AUTO_INCREMENT",
             'name' => "varchar(64) NOT NULL",
             'email' => "varchar(128) NOT NULL",
@@ -148,7 +149,7 @@ $config[\'file_path_bend\'] = "../views/backend/template/";
             'password' => "varchar(64) NOT NULL",
             'visibility' => "int(4) DEFAULT 2",
         );
-        $columns7 = array(
+        $files = array(
             'id' => "varchar(16) NOT NULL",
             'name' => "varchar(64) NOT NULL",
             'ext' => "varchar(32) NOT NULL",
@@ -175,13 +176,13 @@ $config[\'file_path_bend\'] = "../views/backend/template/";
             $dbc->dropTable($prefix."comments");
         if($dbc->checkTable($name,$prefix."files")==1)
             $dbc->dropTable($prefix."files");
-        $msg[0] = $dbc->createTable($prefix."posts", $columns1, "id");
-        $msg[1] = $dbc->createTable($prefix."pages", $columns2, "id");
-        $msg[2] = $dbc->createTable($prefix."users", $columns3, "uuid");
-        $msg[3] = $dbc->createTable($prefix."options", $columns4, "id");
-        $msg[4] = $dbc->createTable($prefix."menu", $columns5, "id");
-        $msg[5] = $dbc->createTable($prefix."comments", $columns6, "id");
-        $msg[6] = $dbc->createTable($prefix."files", $columns7, "id");
+        $msg[0] = $dbc->createTable($prefix."posts", $posts, "id");
+        $msg[1] = $dbc->createTable($prefix."pages", $pages, "id");
+        $msg[2] = $dbc->createTable($prefix."users", $users, "uuid");
+        $msg[3] = $dbc->createTable($prefix."options", $options, "id");
+        $msg[4] = $dbc->createTable($prefix."menu", $menu, "id");
+        $msg[5] = $dbc->createTable($prefix."comments", $comments, "id");
+        $msg[6] = $dbc->createTable($prefix."files", $files, "id");
         $msg[7] = $dbc->insert($prefix."options", $values1);
         $msg[8] = $dbc->insert($prefix."options", $values2);
         $msg[9] = $dbc->insert($prefix."options", $values3);
