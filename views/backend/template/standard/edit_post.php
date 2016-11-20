@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-12">
 
-            <form method="post" action="edit_post.php" enctype="multipart/form-data">
+            <form method="post" action="action_post.php" enctype="multipart/form-data">
                 <div class="col-md-8">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -39,13 +39,14 @@
                             </div>
                             <div class="form-group">
                                 <label for="category" class="control-label">Ангилал</label>
-                                <select class="form-control" id="category" name="category">
-                                    <option value="uncategorized">Ангилалгүй</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
+<!--                                <select class="form-control" id="category" name="category">-->
+<!--                                    <option value="uncategorized">Ангилалгүй</option>-->
+<!--                                    <option>2</option>-->
+<!--                                    <option>3</option>-->
+<!--                                    <option>4</option>-->
+<!--                                    <option>5</option>-->
+<!--                                </select>-->
+                                <input class="form-control" id="category" name="category" type="text" value="<?php if($data['method']=="edit") echo $data['post']['category']; else echo "Ангилалгүй"; ?>">
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="tags">Шошго</label>
@@ -54,7 +55,7 @@
 
                         </div>
                         <div class="panel-footer">
-                            <button type="submit" name="btn-submit" class="btn btn-success"><i class="fa fa-<?php if($data['method']=="edit") echo "save"; else echo "plus"; ?>"></i> <?php if($data['method']=="edit") echo "Хадгалах"; else echo "Нэмэх"; ?></button>
+                            <button type="submit" name="btn-edit" class="btn btn-success"><i class="fa fa-<?php if($data['method']=="edit") echo "save"; else echo "plus"; ?>"></i> <?php if($data['method']=="edit") echo "Хадгалах"; else echo "Нэмэх"; ?></button>
                         </div>
                     </div>
                 </div>
@@ -77,7 +78,7 @@
                                     <label for="imgSource" class="control-label">Зураг оруулах <i id="imgLabelURL">| <i class="fa fa-link"></i> Холбоос</i><i id="imgLabelFile">| <i class="fa fa-file-image-o"></i> Файл</i></label>
                                     <select class="form-control" id="imgSource" name="imgSource">
                                         <option value="none"><i class="fa fa-ban"></i> Зураггүй</option>
-                                        <option value="url">Холбоос</option>
+                                        <option value="url" <?php if($data['method']=="edit" && ($data['post']['image']!="" || $data['post']['image']!=NULL)) echo "selected"; ?>>Холбоос</option>
                                         <option value="file">Хуулах</option>
                                     </select>
                                 </div>

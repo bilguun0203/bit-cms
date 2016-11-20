@@ -37,8 +37,7 @@
                                 <h4 class="modal-title" id="myModalLabel">Устгах уу?</h4>
                             </div>
                             <div class="modal-body">
-                                Сонгосон нийтлэл(үүд)ийг устгахдаа итгэлтэй байна
-                                уу?
+                                Сонгосон нийтлэлийг устгахдаа итгэлтэй байна уу?
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" value="btn-delete" name="btn-delete" class="btn btn-danger"><i class="fa fa-remove" aria-hidden="true"></i> Итгэлтэй байна</button>
@@ -91,7 +90,7 @@
                         <td><small><?php echo $post['created']; ?></small></td>
                         <td><small><?php echo $post['modified']; ?></small></td>
                         <td><small><?php echo $post['pubdate']; ?></small></td>
-                        <td><?php echo $post['parent']; ?></td>
+                        <td><?php $parent = $this->getPostData($post['parent']); if($parent != false) echo $parent['title']; ?></td>
                         <td class="action">
                             <a href="?p=edit_post&method=edit&id=<?php echo $post['id']; ?>"><i class="fa fa-edit" aria-hidden="true"></i> Засах</a><br>
                             <a href="action_post.php?delete=<?php echo $post['id']; ?>"><i class="fa fa-remove" aria-hidden="true"></i> Устгах</a><br>

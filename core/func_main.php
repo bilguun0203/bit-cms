@@ -49,6 +49,7 @@ class MainFunctions {
     }
 
     // Data functions
+    // GROUP: POST ----------------------------------------------------------------------------
     // TODO: createPost updatePost deletePost createComment updateComment deleteComment shalgah
     public function createPost($title,$link="",$body,$category="uncategorized",$tags="",$parent=0,$image="media/default.png",$visibility=1,$comment=1,$pubdate){
         $author = $this->getUserData();
@@ -114,7 +115,7 @@ class MainFunctions {
     }
     public function deletePost($id){
         if($this->db->select($this->config['db_table_prefix']."posts","*","id = '".$id."'") != 0) {
-            $comments = $this->db->select($this->config['db_table_prefix'] . "comments", "*", "location = '" . $id . "'");
+            $comments = $this->db->select($this->config['db_table_prefix'] . "comments", "*", "location = '" . $id . "' AND locationT = 'post'");
             if ($comments != 0) {
                 foreach ($comments as $comment) {
                     $this->deleteComment($comment['id']);
@@ -127,6 +128,87 @@ class MainFunctions {
         else return false;
     }
 
+    // GROUP: PAGE ----------------------------------------------------------------------------
+    public function createPage($title,$link="",$body,$type="normal",$category="uncategorized",$tags="",$parent=0,$image="media/default.png",$visibility=1,$comment=1,$pubdate){
+        $author = $this->getUserData();
+        $dateC = date("Y-m-d H:i:s");
+        $dateM = date("Y-m-d H:i:s");
+        $values = array(
+            'title' => $title,
+            'link' => $link,
+            'image' => $image,
+            'body' => $body,
+            'type' => $type,
+            'category' => $category,
+            'tags' => $tags,
+            'pubdate' => $pubdate,
+            'author' => $author['uuid'],
+            'parent' => $parent,
+            'visibility' => $visibility,
+            'comments_allowed' => $comment,
+            'created' => $dateC,
+            'modified' => $dateM
+        );
+        if($this->db->insert($this->config['db_table_prefix']."pages",$values)){
+            return true;
+        }
+        else return false;
+    }
+    public function updatePage($id,$title,$link="",$body,$type="normal",$category="uncategorized",$tags="",$parent=0,$image="media/default.png",$visibility=1,$comment=1,$pubdate){
+        $date = date("Y-m-d H:i:s");
+        $values = array(
+            'title' => $title,
+            'link' => $link,
+            'image' => $image,
+            'body' => $body,
+            'type' => $type,
+            'category' => $category,
+            'tags' => $tags,
+            'pubdate' => $pubdate,
+            'parent' => $parent,
+            'visibility' => $visibility,
+            'comments_allowed' => $comment,
+            'modified' => $date
+        );
+        if($this->db->update($this->config['db_table_prefix']."pages",$values,"id = '".$id."'")){
+            return true;
+        }
+        else return false;
+    }
+    public function togglePageVisibility($id, $_value){
+        $value = array(
+            'visibility' => $_value
+        );
+        if($this->db->update($this->config['db_table_prefix']."pages",$value,"id = '".$id."'")){
+            return true;
+        }
+        else return false;
+    }
+    public function togglePageComment($id, $_value){
+        $value = array(
+            'comments_allowed' => $_value
+        );
+        if($this->db->update($this->config['db_table_prefix']."pages",$value,"id = '".$id."'")){
+            return true;
+        }
+        else return false;
+    }
+    public function deletePage($id){
+        if($this->db->select($this->config['db_table_prefix']."pages","*","id = '".$id."'") != 0) {
+            $comments = $this->db->select($this->config['db_table_prefix'] . "comments", "*", "location = '" . $id . "' AND locationT = 'page'");
+            if ($comments != 0) {
+                foreach ($comments as $comment) {
+                    $this->deleteComment($comment['id']);
+                }
+            }
+            if ($this->db->delete($this->config['db_table_prefix'] . "pages", "id = '" . $id . "'") == 1) {
+                return true;
+            } else return false;
+        }
+        else return false;
+    }
+
+    // GROUP: COMMENT ----------------------------------------------------------------------------
     public function createComment($name,$email,$comment,$location,$parent,$ip,$useragent,$password,$visibility=2){
         $date = date("Y-m-d H:i:s");
         $values = array(
@@ -159,6 +241,15 @@ class MainFunctions {
         }
         else return false;
     }
+    public function toggleCommentVisibility($id, $_value){
+        $value = array(
+            'visibility' => $_value
+        );
+        if($this->db->update($this->config['db_table_prefix']."comments",$value,"id = '".$id."'")){
+            return true;
+        }
+        else return false;
+    }
     public function deleteComment($id){
         $comments = $this->db->select($this->config['db_table_prefix']."comments","*","parent = '".$id."'");
         if($comments!=0) {
@@ -166,7 +257,7 @@ class MainFunctions {
                 $this->deleteComment($comment['id']);
             }
         }
-        if ($this->db->delete($this->config['db_table_prefix'] . "posts", "id = '" . $id . "'") == 1) {
+        if ($this->db->delete($this->config['db_table_prefix'] . "comments", "id = '" . $id . "'") == 1) {
             return true;
         } else return false;
     }
@@ -258,6 +349,27 @@ class MainFunctions {
         }
         else if($this->is_loggedin()){
             $result = $this->db->select($this->config['db_table_prefix']."users","*","uuid = '".$_SESSION['uuid']."'","","LIMIT 1");
+            if($result != 0){
+                return $result;
+            }
+            else return false;
+        }
+        else return false;
+    }
+
+    public function getPostData($id){
+        if($id != ""){
+            $result = $this->db->select($this->config['db_table_prefix']."posts","*","id = '".$id."'","","LIMIT 1");
+            if($result != 0){
+                return $result;
+            }
+            else return false;
+        }
+        else return false;
+    }
+    public function getPageData($id){
+        if($id != ""){
+            $result = $this->db->select($this->config['db_table_prefix']."pages","*","id = '".$id."'","","LIMIT 1");
             if($result != 0){
                 return $result;
             }

@@ -1,7 +1,7 @@
 <?php
 
 include_once __DIR__.'/../core/connection.php';
-// TODO: Niitlel bichih zasah uildel
+
 if($func->is_loggedin()){
     $method = $_POST['method'];
     $title = $_POST['title'];

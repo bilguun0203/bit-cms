@@ -48,7 +48,10 @@ $config[\'db_password\'] = "' . $password . '";
 $config[\'db_name\'] = "' . $name . '";
 $config[\'db_table_prefix\'] = "' . $prefix . '";
 
-$config[\'url\'] = "http://' . $_SERVER['HTTP_HOST'] . '/";';
+$config[\'url\'] = "http://' . $_SERVER['HTTP_HOST'] . '/";
+$config[\'file_path_fend\'] = "../views/frontend/template/";
+$config[\'file_path_bend\'] = "../views/backend/template/";
+';
         fwrite($confile, $txt);
         fclose($confile);
 
@@ -62,8 +65,8 @@ $config[\'url\'] = "http://' . $_SERVER['HTTP_HOST'] . '/";';
             'body' => "mediumtext NOT NULL",
             'category' => "varchar(128) NOT NULL DEFAULT 'uncategorized'",
             'tags' => "varchar(256) DEFAULT NULL",
-            'created' => "datetime NOT NULL",
-            'modified' => "datetime NOT NULL",
+            'created' => "datetime NOT NULL DEFAULT CURRENT_TIMESTAMP",
+            'modified' => "datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",
             'pubdate' => "datetime NOT NULL",
             'author' => "varchar(64) NOT NULL",
             'parent' => "int(6) NOT NULL DEFAULT '0'",
@@ -81,8 +84,8 @@ $config[\'url\'] = "http://' . $_SERVER['HTTP_HOST'] . '/";';
             'type' => "varchar(32) NOT NULL DEFAULT 'normal'",
             'category' => "varchar(128) NOT NULL DEFAULT 'uncategorized'",
             'tags' => "varchar(256) DEFAULT NULL",
-            'created' => "datetime NOT NULL",
-            'modified' => "datetime NOT NULL",
+            'created' => "datetime NOT NULL DEFAULT CURRENT_TIMESTAMP",
+            'modified' => "datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",
             'pubdate' => "datetime NOT NULL",
             'author' => "varchar(64) NOT NULL",
             'parent' => "int(6) NOT NULL DEFAULT '0'",
@@ -137,10 +140,11 @@ $config[\'url\'] = "http://' . $_SERVER['HTTP_HOST'] . '/";';
             'email' => "varchar(128) NOT NULL",
             'comment' => "text NOT NULL",
             'location' => "int(8) NOT NULL",
+            'locationT' => "varchar(32) NOT NULL",
             'parent' => "int(8) DEFAULT 0",
             'ip' => "varchar(16) NOT NULL",
             'useragent' => "varchar(256) NOT NULL",
-            'date' => "datetime NOT NULL",
+            'date' => "datetime NOT NULL DEFAULT CURRENT_TIMESTAMP",
             'password' => "varchar(64) NOT NULL",
             'visibility' => "int(4) DEFAULT 2",
         );
@@ -151,8 +155,8 @@ $config[\'url\'] = "http://' . $_SERVER['HTTP_HOST'] . '/";';
             'size' => "varchar(32) NOT NULL",
             'download_count' => "int(8) NOT NULL",
             'author' => "varchar(32) DEFAULT 0",
-            'created' => "datetime NOT NULL",
-            'modified' => "datetime NOT NULL",
+            'created' => "datetime NOT NULL DEFAULT CURRENT_TIMESTAMP",
+            'modified' => "datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",
             'pubdate' => "datetime NOT NULL",
             'location' => "varchar(255) NOT NULL",
             'visibility' => "int(4) NOT NULL"

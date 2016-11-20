@@ -7,7 +7,7 @@
 
             <!-- Box start -->
             <div class="col-md-3">
-                <a href="?p=articles">
+                <a href="?p=posts">
                     <div class="box box-primary">
                         <div class="row box-body">
                             <div class="col-sm-3 box-left">
@@ -15,7 +15,7 @@
                             </div>
                             <div class="col-sm-9">
                                 <p class="box-right">Нийтлэл - 4</p>
-                                <p><a href="?p=edit_article"><i class="fa fa-plus" aria-hidden="true"></i> Нийтлэл бичих</a></p>
+                                <p><a href="?p=edit_post"><i class="fa fa-plus" aria-hidden="true"></i> Нийтлэл бичих</a></p>
                             </div>
                         </div>
                     </div>
