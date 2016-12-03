@@ -26,6 +26,12 @@ class MainFunctions {
         return $randomString;
     }
 
+    public function dump($data){
+        $str = '<pre>' . var_export($data, true) . '</pre>';
+        echo $str;
+        return $str;
+    }
+
     public function redirect($url){
         header("Location: " . $url);
     }
@@ -134,7 +140,7 @@ class MainFunctions {
     }
 
     // GROUP: PAGE ----------------------------------------------------------------------------
-    public function createPage($title,$link="",$body,$type="normal",$category="uncategorized",$tags="",$parent=0,$image="media/default.png",$visibility=1,$comment=1,$pubdate){
+    public function createPage($title,$link="",$body,$type="normal",$category="uncategorized",$tags="",$parent=0,$image="media/default.png",$visibility=1,$comment=1,$pubdate,$order){
         $author = $this->getUserData();
         $dateC = date("Y-m-d H:i:s");
         $dateM = date("Y-m-d H:i:s");
@@ -152,7 +158,8 @@ class MainFunctions {
             'visibility' => $visibility,
             'comments_allowed' => $comment,
             'created' => $dateC,
-            'modified' => $dateM
+            'modified' => $dateM,
+            'order' => $order
         );
         if($this->db->insert($this->config['db_table_prefix']."pages",$values)){
             return true;
@@ -201,6 +208,7 @@ class MainFunctions {
     public function deletePage($id){
         if($this->db->select($this->config['db_table_prefix']."pages","*","id = '".$id."'") != 0) {
             $comments = $this->db->select($this->config['db_table_prefix'] . "comments", "*", "location = '" . $id . "' AND locationT = 'page'");
+            $subpages = $this->db->select($this->config['db_table_prefix'] . "pages", "*", "parent = '" . $id . "'");
             if ($comments != 0) {
                 if (is_array($comments[0])) {
                     foreach ($comments as $comment) {
@@ -209,6 +217,22 @@ class MainFunctions {
                 }
                 else {
                     $this->deleteComment($comments['id']);
+                }
+            }
+            if ($subpages != 0) {
+                if (is_array($subpages[0])) {
+                    foreach ($subpages as $sub) {
+                        $value = array(
+                            'parent' => 0
+                        );
+                        $this->db->update($this->config['db_table_prefix'] . "pages", $value, "id = '".$sub['id']."'");
+                    }
+                }
+                else {
+                    $value = array(
+                        'parent' => 0
+                    );
+                    $this->db->update($this->config['db_table_prefix'] . "pages", $value, "id = '".$subpages['id']."'");
                 }
             }
             if ($this->db->delete($this->config['db_table_prefix'] . "pages", "id = '" . $id . "'") == 1) {

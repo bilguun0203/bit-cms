@@ -106,7 +106,12 @@ class func_db {
         else {
             $sql .= $columns;
         }
-        $sql .= " FROM " . $table . " WHERE " . $where . " ";
+        if($where == ""){
+            $sql .= " FROM " . $table . " ";
+        }
+        else {
+            $sql .= " FROM " . $table . " WHERE " . $where . " ";
+        }
         if($order!="") {
             $sql .= "ORDER BY " . $order . " ";
         }

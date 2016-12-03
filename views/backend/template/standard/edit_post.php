@@ -33,9 +33,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="editor">Агуулга</label>
-                                <textarea class="form-control" id="editor" name="body" required>
-                                    <?php if($data['method']=="edit") echo $data['post']['body']; ?>
-                                </textarea>
+                                <textarea class="form-control" id="editor" name="body" required><?php if($data['method']=="edit") echo $data['post']['body']; ?></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="category" class="control-label">Ангилал</label>
@@ -55,6 +53,7 @@
 
                         </div>
                         <div class="panel-footer">
+                            <a href="?p=posts" class="btn btn-info"><i class="fa fa-arrow-left"></i> Буцах</a>
                             <button type="submit" name="btn-edit" class="btn btn-success"><i class="fa fa-<?php if($data['method']=="edit") echo "save"; else echo "plus"; ?>"></i> <?php if($data['method']=="edit") echo "Хадгалах"; else echo "Нэмэх"; ?></button>
                         </div>
                     </div>
@@ -68,8 +67,10 @@
                             <div class="form-group">
                                 <label for="parent" class="control-label">Эх нийтлэл</label>
                                 <select class="form-control" name="parent" id="parent">
-                                    <option value="0">Байхгүй</option>
-                                    <option value="1">ыөуаж</option>
+                                    <option value="0" <?php if($data['post']['parent'] == 0) echo "selected"; ?>>Байхгүй</option>
+                                    <?php if($data['parent'] != 0){ foreach ($data['parent'] as $item){ if($item['id']!=$data['post']['id']) { ?>
+                                        <option value="<?php echo $item['id']; ?>" <?php if($data['post']['parent'] == $item['id']) echo "selected"; ?>><?php echo $item['title']; ?></option>
+                                    <?php } } } ?>
                                 </select>
                             </div>
                             <!-- FEATURED IMAGE -->

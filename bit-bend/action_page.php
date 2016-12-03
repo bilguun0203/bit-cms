@@ -35,7 +35,9 @@ if($func->is_loggedin()){
             }
         }
         else if($method == "add"){
-            if($func->createPage($title,$link,$body,$type,$category,$tags,$parent,$imgsource,$visibility,$comment,$pubdate)){
+            $ord = $dbc->select($config['db_table_prefix']."pages","MAX(`order`) AS ord");
+            $order = ++$ord['ord'];
+            if($func->createPage($title,$link,$body,$type,$category,$tags,$parent,$imgsource,$visibility,$comment,$pubdate,$order)){
                 $func->redirect($func->config['url']."bit-bend/?p=pages&create=1");
             }
             else {

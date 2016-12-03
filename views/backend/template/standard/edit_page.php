@@ -33,9 +33,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" for="editor">Агуулга</label>
-                                    <textarea class="form-control" id="editor" name="body" required>
-                                    <?php if($data['method']=="edit") echo $data['page']['body']; ?>
-                                </textarea>
+                                    <textarea class="form-control" id="editor" name="body" required><?php if($data['method']=="edit") echo $data['page']['body']; ?></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="type" class="control-label">Төрөл</label>
@@ -62,6 +60,7 @@
 
                             </div>
                             <div class="panel-footer">
+                                <a href="?p=pages" class="btn btn-info"><i class="fa fa-arrow-left"></i> Буцах</a>
                                 <button type="submit" name="btn-edit" class="btn btn-success"><i class="fa fa-<?php if($data['method']=="edit") echo "save"; else echo "plus"; ?>"></i> <?php if($data['method']=="edit") echo "Хадгалах"; else echo "Нэмэх"; ?></button>
                             </div>
                         </div>
@@ -73,10 +72,12 @@
                             </div>
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <label for="parent" class="control-label">Эх нийтлэл</label>
+                                    <label for="parent" class="control-label">Эх хуудас</label>
                                     <select class="form-control" name="parent" id="parent">
                                         <option value="0">Байхгүй</option>
-                                        <option value="1">ыөуаж</option>
+                                        <?php if($data['parent'] != 0){ foreach ($data['parent'] as $item){ ?>
+                                        <option value="<?php echo $item['id']; ?>"><?php echo $item['title']; ?></option>
+                                        <?php } } ?>
                                     </select>
                                 </div>
                                 <!-- FEATURED IMAGE -->

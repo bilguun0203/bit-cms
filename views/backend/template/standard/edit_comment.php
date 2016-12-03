@@ -33,12 +33,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" for="editor">Сэтгэгдэл</label>
-                                    <textarea class="form-control" id="editor" name="comment" required>
-                                    <?php echo $data['comment']['comment']; ?>
-                                </textarea>
+                                    <textarea class="form-control" id="editor" name="comment" required><?php echo $data['comment']['comment']; ?></textarea>
                                 </div>
                             </div>
                             <div class="panel-footer">
+                                <a href="?p=comments" class="btn btn-info"><i class="fa fa-arrow-left"></i> Буцах</a>
                                 <button type="submit" name="btn-edit" class="btn btn-success"><i class="fa fa-save"></i> Хадгалах</button>
                             </div>
                         </div>

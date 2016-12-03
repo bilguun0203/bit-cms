@@ -56,6 +56,7 @@
                                 </div>
                             </div>
                             <div class="panel-footer">
+                                <a href="?p=users" class="btn btn-info"><i class="fa fa-arrow-left"></i> Буцах</a>
                                 <button type="submit" name="btn-edit" class="btn btn-success"><i class="fa fa-<?php if($data['method']=="edit") echo "save"; else echo "plus"; ?>"></i> <?php if($data['method']=="edit") echo "Хадгалах"; else echo "Нэмэх"; ?></button>
                             </div>
                         </div>

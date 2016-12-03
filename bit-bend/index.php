@@ -32,6 +32,16 @@ if($db_connection == 1 && $dbc->checkAllTable($config['db_name'],$config['db_tab
 
                     // PAGE: EDIT POST
                     if ($page == "edit_post") {
+                        // Select Parent Posts
+                        $result = $dbc->select($config['db_table_prefix'] . "posts", "id, title", "1", "title ASC");
+                        if ($result != 0) {
+                            if (is_array($result[0]))
+                                $data['parent'] = $result;
+                            else $data['parent'][0] = $result;
+                        } else {
+                            $data['parent'] = 0;
+                        }
+                        // Select method
                         if (isset($_GET['method'])) {
                             if ($_GET['method'] == "edit" && isset($_GET['id'])) {
                                 $result = $dbc->select($config['db_table_prefix'] . "posts", "*", "id = " . $_GET['id'], "", "LIMIT 1");
@@ -61,6 +71,16 @@ if($db_connection == 1 && $dbc->checkAllTable($config['db_name'],$config['db_tab
 
                     // PAGE: EDIT PAGE
                     if ($page == "edit_page") {
+                        // Select Parent Pages
+                        $result = $dbc->select($config['db_table_prefix'] . "pages", "id, title", "parent = 0", "title ASC");
+                        if ($result != 0) {
+                            if (is_array($result[0]))
+                                $data['parent'] = $result;
+                            else $data['parent'][0] = $result;
+                        } else {
+                            $data['parent'] = 0;
+                        }
+                        // Select method
                         if (isset($_GET['method'])) {
                             if ($_GET['method'] == "edit" && isset($_GET['id'])) {
                                 $result = $dbc->select($config['db_table_prefix'] . "pages", "*", "id = " . $_GET['id'], "", "LIMIT 1");
